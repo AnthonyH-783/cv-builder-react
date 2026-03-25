@@ -20,13 +20,17 @@ interface FormInfo{
 
 
 function App() {
-  const [state, setState] = useState<FormInfo>({});
+  const [state, setState] = useState<FormInfo>({name:"",email:"",phone:"", school:"", degree:"",
+                                                degree_start:"", degree_end:"", company:"", 
+                                                position: "", responsibilities: ""
+  });
   const [step, setStep] = useState<number>(1);
 
 
   return (
     <>
-    <MyForm step={step} setStep={setStep} setState={setState}></MyForm>
+    {console.log(state)}
+    <MyForm step={step} setStep={setStep} state={state} setState={setState}></MyForm>
       
     </>
   )
