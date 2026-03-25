@@ -1,5 +1,5 @@
 
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction, ChangeEvent } from "react";
 
 type callback = (param: number) => void;
 
@@ -24,39 +24,25 @@ interface Prop{
 
 export default function MyForm({step, setStep, state, setState}: Prop){
 
-    // Form Parsing Functions
-    const parseData = (data: FormData): Record<string,string> => {
-        const extracted: Record<string,string> = {};
-        for(const pair of data.entries()){
-            const name: string = pair[0];
-            const value: string = pair[1] as string;
-            extracted[name] = value;
-        }
-        return extracted;
-    }
-    // Saving form
-    const saveForm = (form: HTMLFormElement): void => {
-        const data = new FormData(form);
-        const parsed_data: Record<string,string> = parseData(data);
-        setState((prev) => ({...prev, ...parsed_data}));
-    }
+    // Defining event handlers
+
     // Event Handler for next button
     const goNext = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         evt.preventDefault();
-        if(!evt.target) return;
-        const form = (evt.target as HTMLElement).closest("form");
-        if(!form) return;
-        saveForm(form);
         setStep(step + 1);
     }
     // Event Handler for Previous button
     const goPrev = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         evt.preventDefault();
-        if(!evt.target) return;
-        const form = (evt.target as HTMLElement).closest("form");
-        if(!form) return;
-        saveForm(form);
         setStep(step - 1);
+    }
+    // Event handler that saves input to state
+    const handleChange = (evt: ChangeEvent<HTMLInputElement>): void => {
+        evt.preventDefault();
+        const name = evt.target.name;
+        const value = evt.target.value;
+
+        setState((prev) => ({...prev, [name]: value}));
     }
 
 
@@ -67,16 +53,16 @@ export default function MyForm({step, setStep, state, setState}: Prop){
                 <h3>General Info</h3>
                 <fieldset>
                     <legend>Name</legend>
-                    <input type="text" name="name" value={state.name}/>
+                    <input onChange={handleChange} type="text" name="name" value={state.name}/>
                 </fieldset>
                 <fieldset>
                     <legend>Email</legend>
-                    <input type="email" name="email" value={state.email}/>
+                    <input onChange={handleChange} type="email" name="email" value={state.email}/>
                 </fieldset>
 
                 <fieldset>
                     <legend>Phone</legend>
-                    <input type="tel" name="phone" value={state.phone}/>
+                    <input onChange={handleChange} type="tel" name="phone" value={state.phone}/>
                 </fieldset>
 
                 <button onClick={(e) => goNext(e)} type="submit">Next</button>
@@ -89,23 +75,23 @@ export default function MyForm({step, setStep, state, setState}: Prop){
                 <div>
                     <fieldset>
                         <legend>School</legend>
-                        <input type="text" name="school"/>
+                        <input onChange={handleChange} type="text" name="school" value={state.school}/>
                     </fieldset>
                     
                     <fieldset>
                         <legend>Degree Title</legend>
-                        <input type="text" name="degree"/>
+                        <input onChange={handleChange} type="text" name="degree" value={state.degree}/>
                     </fieldset>
 
                     <div className="dates">
                         <fieldset>
                             <legend>Degree Start</legend>
-                            <input name="degree_start" type="date"></input>
+                            <input onChange={handleChange} name="degree_start" type="date" value={state.degree_start}></input>
                         </fieldset>
 
                         <fieldset>
                             <legend>Degree End</legend>
-                            <input name="degree_end" type="date"></input>
+                            <input onChange={handleChange} name="degree_end" type="date" value={state.degree_end}></input>
                         </fieldset>
 
                     </div>
