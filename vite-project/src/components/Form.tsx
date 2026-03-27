@@ -1,28 +1,17 @@
 
-import type { Dispatch, SetStateAction, ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
+import { useState } from "react";
+import Resume from "./Resume";
+import type FormInfo from "../types";
 
-type callback = (param: number) => void;
+export default function MyForm(){
 
-interface FormInfo{
-  name?: string,
-  email?: string,
-  phone?: string,
-  school?: string,
-  degree?: string,
-  degree_start?: string,
-  degree_end?: string,
-
-}
-
-interface Prop{
-    step: number,
-    state: FormInfo,
-    setStep: callback,
-    setState: Dispatch<SetStateAction<FormInfo>>,
-}
-
-
-export default function MyForm({step, setStep, state, setState}: Prop){
+    // Defining state hooks
+      const [state, setState] = useState<FormInfo>({name:undefined,email:undefined,phone:undefined, school:undefined, degree:undefined,
+                                                    degree_start:undefined, degree_end:undefined, company:undefined, 
+                                                    position: undefined, responsibilities: undefined
+      });
+      const [step, setStep] = useState<number>(1);
 
     // Defining event handlers
 
@@ -45,6 +34,13 @@ export default function MyForm({step, setStep, state, setState}: Prop){
         setState((prev) => ({...prev, [name]: value}));
     }
 
+    const handleTextArea = (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+        evt.preventDefault();
+        const name = evt.target.name;
+        const value = evt.target.value;
+
+        setState((prev) => ({...prev, [name]: value}));
+    }
 
     switch(step){
         case 1:
@@ -96,6 +92,7 @@ export default function MyForm({step, setStep, state, setState}: Prop){
 
                     </div>
 
+
                 </div>
                 <div className="buttons">
                     <button onClick={(e) => goPrev(e)} type="submit">Previous</button>
@@ -108,17 +105,46 @@ export default function MyForm({step, setStep, state, setState}: Prop){
         case 3:
             // Work Experience
             return <form className="work">
+               <h3>Work Experience</h3>
+                    <div>
+                        <fieldset>
+                            <legend>Company Name</legend>
+                            <input onChange={handleChange} type="text" name="company" value={state.company}/>
+                        </fieldset>
+                        
+                        <fieldset>
+                            <legend>Position</legend>
+                            <input onChange={handleChange} type="text" name="position" value={state.position}/>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Responsibilities</legend>
+                            <textarea onChange={handleTextArea} name="responsibilities" value={state.responsibilities}/>
+                        </fieldset>
+
+                        <div className="dates">
+                            <fieldset>
+                                <legend>Work Start</legend>
+                                <input onChange={handleChange} name="work_start" type="date" value={state.work_start}></input>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>Work End</legend>
+                                <input onChange={handleChange} name="work_end" type="date" value={state.work_end}></input>
+                            </fieldset>
+
+                        </div>
+
+                    </div>
+                    <div className="buttons">
+                        <button onClick={(e) => goPrev(e)} type="submit">Previous</button>
+                        <button onClick={(e) => goNext(e)} type="submit">Next</button>
+                    </div>
 
             </form >
         case 4:
             // Final Resume
-            return <div className="resume">
-
-            </div>
+            return <Resume formInfo={state} setStep={setStep}></Resume>
 
     }
-
-
-
 
 }

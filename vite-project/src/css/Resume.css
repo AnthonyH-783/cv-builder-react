@@ -1,0 +1,214 @@
+ @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap');
+
+  .resume-wrapper {
+    --ink: #1a1a1a;
+    --ink-light: #555;
+    --rule: #c8b89a;
+    --bg: #faf8f4;
+    --accent: #7a4f2d;
+    --paper-shadow: 0 4px 32px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.07);
+    font-family: 'Lato', sans-serif;
+    background: #e8e2d9;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .resume {
+    background: var(--bg);
+    width: 100%;
+    max-width: 720px;
+    box-shadow: var(--paper-shadow);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .resume.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Decorative top border stripe */
+  .resume::before {
+    content: '';
+    display: block;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent) 0%, #c8a97a 60%, var(--rule) 100%);
+  }
+
+  
+  /* ── Header ── */
+  .resume-header {
+    padding: 52px 56px 36px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .resume-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.9rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+  }
+
+  .resume-name .name-placeholder {
+    color: #bbb;
+    font-style: italic;
+  }
+
+  .resume-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 24px;
+    margin-top: 14px;
+  }
+
+  .resume-contact-item {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .resume-contact-item svg {
+    flex-shrink: 0;
+    opacity: 0.55;
+  }
+
+  /* Decorative corner mark */
+  .header-corner {
+    position: absolute;
+    top: 52px;
+    right: 56px;
+    width: 38px;
+    height: 38px;
+    border-top: 2px solid var(--rule);
+    border-right: 2px solid var(--rule);
+    opacity: 0.7;
+  }
+
+  /* Body */
+  .resume-body {
+    padding: 0 56px 52px;
+  }
+
+  /* Section */
+  .resume-section {
+    margin-top: 36px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+
+  .resume-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-heading-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* Entry Card */
+  .entry {
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+  }
+
+  .entry-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    justify-self: baseline;
+
+  }
+
+  .entry-subtitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    grid-column: 0;
+    justify-self: baseline;
+  }
+
+  .entry-date {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    letter-spacing: 0.06em;
+    text-align: right;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    white-space: nowrap;
+  }
+
+
+  .edit-btn{
+    width: 3rem;
+    background-color: var(--accent);
+    cursor: pointer;
+  }
+
+  /* Indent bullet lines */
+
+
+  .bullets{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-left: 0.25rem;
+    color: var(--ink-light);
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 0.88rem;
+  }
+  
+
+  /* ── Empty state ── */
+  .field-empty {
+    color: #ccc;
+    font-style: italic;
+  }
+
+  @media (max-width: 600px) {
+    .resume-header,
+    .resume-body { padding-left: 28px; padding-right: 28px; }
+    .header-corner { right: 28px; }
+    .resume-name { font-size: 2.1rem; }
+    .entry { grid-template-columns: 1fr; }
+    .entry-date { grid-column: 1; grid-row: auto; text-align: left; margin-bottom: 4px; }
+  }
