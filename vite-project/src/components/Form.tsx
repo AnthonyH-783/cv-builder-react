@@ -45,7 +45,7 @@ export default function MyForm(){
     switch(step){
         case 1:
             // General Info
-            return <form className="general-info">
+            return <form key="general" className="general-info">
                 <h3>General Info</h3>
                 <fieldset>
                     <legend>Name</legend>
@@ -66,7 +66,7 @@ export default function MyForm(){
             </form>
         case 2:
             // Education
-            return <form className="education">
+            return <form key="education" className="education">
                 <h3>Education</h3>
                 <div>
                     <fieldset>
@@ -104,7 +104,7 @@ export default function MyForm(){
             </form>
         case 3:
             // Work Experience
-            return <form className="work">
+            return <form key="work" className="work">
                <h3>Work Experience</h3>
                     <div>
                         <fieldset>
